@@ -8,12 +8,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class BFSExample {
+class Database {
 
-    public static void populateDB(EntityManager em) {
-
-        RandomDataGenerator generator = new RandomDataGenerator();
-        List<UserNode> users = generator.generate();
+    static List<UserNode> populateDB(EntityManager em) {
+        List<UserNode> users = new RandomDataGenerator().generate();
 
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
@@ -21,17 +19,7 @@ public class BFSExample {
             em.persist(user);
         }
         transaction.commit();
-
         GraphPlotter.plot(users);
-        
-        System.out.println("Done!");
-    }
-
-    public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bfsExampleUnit");
-        EntityManager em = emf.createEntityManager();
-
-        em.clear();
-        populateDB(em);
+        return users;
     }
 }
