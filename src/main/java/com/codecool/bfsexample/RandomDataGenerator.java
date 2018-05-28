@@ -26,11 +26,11 @@ public class RandomDataGenerator {
         UserNode firstUser = genNewUser();
         users.add(firstUser);
         // first generate and connect users in a star shaped tree
-        genTree(firstUser, users, 4);
+        genTree(firstUser, users, 3);
         // then introduce some loops
-        for (int i = 0; i < users.size() - 30; i++) {
+        for (int i = 0; i < users.size() - 10; i++) {
             if (i % 5 == 0) {
-                users.get(i).addFriend(users.get(i + 30));
+                users.get(i).addFriend(users.get(i + 10));
             }
         }
         return users;
