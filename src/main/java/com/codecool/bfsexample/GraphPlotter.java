@@ -4,17 +4,18 @@ import com.codecool.bfsexample.model.UserNode;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import sun.reflect.generics.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 
 public class GraphPlotter {
 
     public static void plot(List<UserNode> points) {
         Graph graph = new SingleGraph("Friend circle");
-        // add all nodes to the graph. IDs are filled automatically by the DB at this point.
-        List<UserNode> allEdges = new ArrayList<>();
+
         for (UserNode userNode : points) {
             Node newNode = graph.addNode(Long.toString(userNode.getId()));
             newNode.addAttribute("ui.label", userNode.getFirstName() + " " + userNode.getLastName());
@@ -31,6 +32,5 @@ public class GraphPlotter {
             }
         }
         graph.display();
-
     }
 }
