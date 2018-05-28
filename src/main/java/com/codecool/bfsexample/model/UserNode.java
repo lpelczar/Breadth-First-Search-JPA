@@ -1,8 +1,7 @@
 package com.codecool.bfsexample.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class UserNode {
@@ -12,6 +11,9 @@ public class UserNode {
     private long id;
     private String firstName;
     private String lastName;
+    private transient boolean visited;
+    private transient int distance;
+    private transient List<UserNode> shortestPath = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -56,5 +58,34 @@ public class UserNode {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public List<UserNode> getShortestPath() {
+        return shortestPath;
+    }
+
+    public void setShortestPath(List<UserNode> shortestPath) {
+        this.shortestPath = shortestPath;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
     }
 }
