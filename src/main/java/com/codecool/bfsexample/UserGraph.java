@@ -56,6 +56,36 @@ class UserGraph {
         return friendsOfFriends;
     }
 
+    List<UserNode> getShortestPath(UserNode user1, UserNode user2) {
+        clearNodes();
+
+        Queue<UserNode> queue = new LinkedList<>();
+        queue.add(user1);
+        user1.setVisited(true);
+        while (!queue.isEmpty()) {
+            UserNode parent = queue.remove();
+            UserNode child;
+            while ((child = getUnvisitedChildNode(parent)) != null) {
+                child.setVisited(true);
+
+                if (parent.getShortestPath().isEmpty()) {
+                    parent.getShortestPath().add(parent);
+                }
+
+                List<UserNode> shortest = new ArrayList<>(parent.getShortestPath());
+                shortest.add(child);
+                child.setShortestPath(shortest);
+                if (child == user2) {
+                    return child.getShortestPath();
+                }
+
+                queue.add(child);
+            }
+        }
+        clearNodes();
+        return Collections.emptyList();
+    }
+
     private UserNode getUnvisitedChildNode(UserNode node) {
         UserNode unvisitedNode = null;
         for (UserNode userNode : node.getFriends()) {
