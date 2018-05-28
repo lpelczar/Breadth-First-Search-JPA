@@ -33,7 +33,28 @@ class UserGraph {
         return -1;
     }
 
+    Set<UserNode> getFriendsOfFriends(UserNode user, int distance) {
+        clearNodes();
+        Set<UserNode> friendsOfFriends = new HashSet<>();
+        Queue<UserNode> queue = new LinkedList<>();
+        queue.add(user);
+        user.setVisited(true);
+        while (!queue.isEmpty()) {
+            UserNode parent = queue.remove();
+            UserNode child;
+            while ((child = getUnvisitedChildNode(parent)) != null) {
+                child.setVisited(true);
 
+                if (getDistanceBetweenTwoUsers(user, child) <= distance){
+                    friendsOfFriends.add(child);
+                }
+
+                queue.add(child);
+            }
+        }
+        clearNodes();
+        return friendsOfFriends;
+    }
 
     private UserNode getUnvisitedChildNode(UserNode node) {
         UserNode unvisitedNode = null;
